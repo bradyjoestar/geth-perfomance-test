@@ -14,6 +14,7 @@ exec geth_op_linux \
   --allow-insecure-unlock \
   --unlock 0x00000398232E2064F896018496b4b44b3D62751F \
   --http \
+  --rpcaddr 0.0.0.0 \
   --mine \
   --miner.etherbase 0x00000398232E2064F896018496b4b44b3D62751F \
   "$@"
