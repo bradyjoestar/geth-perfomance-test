@@ -1,14 +1,14 @@
 echo "Importing private key"
-rm -rf key.prv password
+rm -rf key.prv password /root/.ethereum
 echo 6587ae678cf4fc9a33000cdbf9f35226b71dcc6a4684a31203241f9bcfd55d27 > key.prv
 echo "pwd" > password
-geth account import --password ./password ./key.prv
+geth_mantle_linux account import --password ./password ./key.prv
 
 echo "Initializing Geth node"
-geth --verbosity=4 "$@" init genesis.json
+geth_mantle_linux --verbosity=4 "$@" init genesis.json
 
 echo "Starting Geth node"
-exec geth \
+exec geth_mantle_linux \
   --verbosity=4 \
   --password ./password \
   --allow-insecure-unlock \
