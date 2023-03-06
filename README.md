@@ -28,3 +28,6 @@ git clone https://github.com/bradyjoestar/geth-perfomance-test.git
 ```shell
 ./0_startMantle.sh
 ```
+
+#### tips
+mantle and op can't run concurrently.
