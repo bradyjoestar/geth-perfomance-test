@@ -18,4 +18,4 @@ exec geth_op_linux \
   --nodiscover \
   --mine \
   --miner.etherbase 0x00000398232E2064F896018496b4b44b3D62751F \
-  "$@"
+  "$@" > logop.txt

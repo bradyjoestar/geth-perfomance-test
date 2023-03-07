@@ -11,12 +11,12 @@ git clone https://github.com/bradyjoestar/geth-perfomance-test.git
 
 #### build op
 ```shell
-./0_buildOP.sh
+./0_buildop.sh
 ```
 
 #### build mantle
 ```shell
-./0_buildMantle.sh
+./0_buildmantle.sh
 ```
 
 #### start op
