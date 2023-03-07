@@ -88,7 +88,6 @@ func DistributeErc20(l2Client *ethclient.Client, UserAddress string,
 		log.Printf("balanceL2 ： %v", balancel2)
 	}
 }
-
 func TransferErc20(l2Erc20 *l2.L2, from *ecdsa.PrivateKey, to common.Address, n *big.Int, nonce *big.Int) error {
 	auth := bind.NewKeyedTransactor(from)
 	auth.Nonce = nonce
