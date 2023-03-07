@@ -9,34 +9,28 @@ git clone https://github.com/bradyjoestar/geth-perfomance-test.git
 #initial accounts key: 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 ```
 
-#### build op
+### start optimism
 ```shell
-./0_buildop.sh
+git clone https://github.com/bradyjoestar/optimism.git
+cd optimism/ops
+git checkout wb/performance_test
+make build
+make clean
+docker-compose up -d
 ```
 
-#### build mantle
+### start mantle
 ```shell
-./0_buildmantle.sh
+git clone https://github.com/mantlenetworkio/mantle.git
+cd mantle/ops
+git checkout wb/performance-test
+make build
+make clean
+docker-compose up -d
 ```
 
-#### start op
-```shell
-./0_startOP.sh
-```
+all 10000 accounts are imported into genesis.json
 
-#### start mantle
-```shell
-./0_startMantle.sh
-```
-
-#### tips
-mantle and op can't run concurrently.
-
-
-#### init bit accounts
-```shell
-go test -v -run TestInitBitAccount chain_init_test.go
-```
 
 #### test
 ```shell
