@@ -52,7 +52,7 @@ func DistributeBit(l2Client *ethclient.Client, UserAddress string, UserPrivateKe
 			log.Fatalln(err.Error())
 		}
 		n := new(big.Int)
-		n, _ = n.SetString("10000", 10)
+		n, _ = n.SetString("10000000000", 10)
 
 		for {
 			fmt.Println("TransferBit: ->nonce->", nonce)
