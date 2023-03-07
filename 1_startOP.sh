@@ -15,6 +15,7 @@ exec geth_op_linux \
   --unlock 0x00000398232E2064F896018496b4b44b3D62751F \
   --rpc \
   --rpcaddr 0.0.0.0 \
+  --nodiscover \
   --mine \
   --miner.etherbase 0x00000398232E2064F896018496b4b44b3D62751F \
   "$@"
