@@ -31,3 +31,14 @@ git clone https://github.com/bradyjoestar/geth-perfomance-test.git
 
 #### tips
 mantle and op can't run concurrently.
+
+
+#### init bit accounts
+```shell
+go test -v -run TestInitBitAccount chain_init_test.go
+```
+
+#### test
+```shell
+go run bit_stress.go
+```
