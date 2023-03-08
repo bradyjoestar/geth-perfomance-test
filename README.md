@@ -13,7 +13,7 @@ git clone https://github.com/bradyjoestar/geth-perfomance-test.git
 ```shell
 git clone https://github.com/bradyjoestar/optimism.git
 cd optimism/ops
-git checkout wb/performance_test
+git checkout wb/performance-test
 make build
 make clean
 docker-compose up -d
