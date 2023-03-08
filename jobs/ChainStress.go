@@ -70,13 +70,12 @@ func GetHash(client *ethclient.Client, hash common.Hash) {
 
 }
 
-func TransferBit(client *ethclient.Client, fromPrivateKey *ecdsa.PrivateKey, toAddress common.Address, chainID *big.Int) error {
+func TransferBit(client *ethclient.Client, fromPrivateKey *ecdsa.PrivateKey, toAddress common.Address, chainID *big.Int, nonce uint64) error {
 	n := big.NewInt(1)
 	n.SetString("1000", 10)
 
 	gasLimit := uint64(21000) // in units
 	gasPrice := big.NewInt(1)
-	nonce := uint64(5)
 
 	var data []byte
 	tx := types.NewTransaction(nonce, toAddress, n, gasLimit, gasPrice, data)

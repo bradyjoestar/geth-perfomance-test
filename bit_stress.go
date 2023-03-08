@@ -64,6 +64,9 @@ func main() {
 	var wg = new(sync.WaitGroup)
 	n := AllSendNum / SecondSendNum
 	wg.Add(int(n) * SecondSendNum)
+	l2client, err := ethclient.Dial(l2url)
+
+	nonce, err := l2client.PendingNonceAt(context.Background(), crypto.PubkeyToAddress(fromAccountList[10].PublicKey))
 
 	for j := 0; j < n; j++ {
 		for i := j * SecondSendNum; i < (j+1)*SecondSendNum; i++ {
@@ -81,7 +84,7 @@ func main() {
 					return
 				}
 				timeS := time.Now()
-				err = jobs.TransferBit(client, fromAccountList[num], to, l2chainID)
+				err = jobs.TransferBit(client, fromAccountList[num], to, l2chainID, nonce)
 				if err != nil {
 					log.Printf("transfer error: %v \n", err)
 					return
