@@ -36,7 +36,6 @@ func main() {
 
 	//初始化log
 	jobs.InitLog(*logName)
-	starTime := time.Now()
 
 	//文件读取
 	f, err1 := os.Open(*filePath)
@@ -60,57 +59,66 @@ func main() {
 	to := crypto.PubkeyToAddress(fromAccountList[9999].PublicKey)
 
 	//Start Test
+	var rst []string
 
 	var wg = new(sync.WaitGroup)
 	n := AllSendNum / SecondSendNum
-	wg.Add(int(n) * SecondSendNum)
-	l2client, err := ethclient.Dial(l2url)
+	for i := 0; i < 20; i++ {
+		starTime := time.Now()
 
-	nonce, err := l2client.PendingNonceAt(context.Background(), crypto.PubkeyToAddress(fromAccountList[10].PublicKey))
+		wg.Add(int(n) * SecondSendNum)
+		l2client, err := ethclient.Dial(l2url)
 
-	for j := 0; j < n; j++ {
-		for i := j * SecondSendNum; i < (j+1)*SecondSendNum; i++ {
-			go func(num int, wg *sync.WaitGroup) {
-				defer wg.Done()
+		nonce, err := l2client.PendingNonceAt(context.Background(), crypto.PubkeyToAddress(fromAccountList[10].PublicKey))
 
-				client, err := ethclient.Dial(l2url)
-				if err != nil {
-					log.Printf("ethclient.Dial,%v\n", err)
-				}
-				defer client.Close()
+		for j := 0; j < n; j++ {
+			for i := j * SecondSendNum; i < (j+1)*SecondSendNum; i++ {
+				go func(num int, wg *sync.WaitGroup) {
+					defer wg.Done()
 
-				//query eth balance
-				if fromAccountList[num] == nil {
-					return
-				}
-				timeS := time.Now()
-				err = jobs.TransferBit(client, fromAccountList[num], to, l2chainID, nonce)
-				if err != nil {
-					log.Printf("transfer error: %v \n", err)
-					return
-				}
-				timeE := time.Now().UnixMilli() - timeS.UnixMilli()
-				log.Printf("forTransferTime: %vms", timeE)
+					client, err := ethclient.Dial(l2url)
+					if err != nil {
+						log.Printf("ethclient.Dial,%v\n", err)
+					}
+					defer client.Close()
 
-			}(i, wg)
+					//query eth balance
+					if fromAccountList[num] == nil {
+						return
+					}
+					timeS := time.Now()
+					err = jobs.TransferBit(client, fromAccountList[num], to, l2chainID, nonce)
+					if err != nil {
+						log.Printf("transfer error: %v \n", err)
+						return
+					}
+					timeE := time.Now().UnixMilli() - timeS.UnixMilli()
+					log.Printf("forTransferTime: %vms", timeE)
+
+				}(i, wg)
+
+			}
+			time.Sleep(time.Millisecond * time.Duration(50))
 
 		}
-		time.Sleep(time.Millisecond * time.Duration(50))
+
+		wg.Wait()
+		log.Printf("任务整体耗时：%v\n", time.Since(starTime))
+		rst = append(rst, time.Since(starTime).String())
+		client, err := ethclient.Dial(l2url)
+		if err != nil {
+			log.Printf("ethclient.Dial,%v\n", err)
+		}
+		defer client.Close()
+		balance, err := client.BalanceAt(context.Background(), to, nil)
+		if err != nil {
+			log.Printf("get balance error ,%v\n", err)
+
+		}
+		log.Printf("balance = %v", balance)
 
 	}
-
-	wg.Wait()
-	log.Printf("任务整体耗时：%v\n", time.Since(starTime))
-	client, err := ethclient.Dial(l2url)
-	if err != nil {
-		log.Printf("ethclient.Dial,%v\n", err)
+	for i := 0; i < len(rst); i++ {
+		log.Printf(rst[i])
 	}
-	defer client.Close()
-	balance, err := client.BalanceAt(context.Background(), to, nil)
-	if err != nil {
-		log.Printf("get balance error ,%v\n", err)
-
-	}
-	log.Printf("balance = %v", balance)
-
 }
