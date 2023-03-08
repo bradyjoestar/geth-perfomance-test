@@ -23,7 +23,7 @@ docker-compose up -d
 ```shell
 git clone https://github.com/mantlenetworkio/mantle.git
 cd mantle/ops
-git checkout wb/performance-test
+git checkout wb/performance_test
 make build
 make clean
 docker-compose up -d
