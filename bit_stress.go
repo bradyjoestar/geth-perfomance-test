@@ -63,7 +63,7 @@ func main() {
 
 	var wg = new(sync.WaitGroup)
 	n := AllSendNum / SecondSendNum
-	for i := 0; i < 20; i++ {
+	for i := 0; i < 3; i++ {
 		starTime := time.Now()
 
 		wg.Add(int(n) * SecondSendNum)
